@@ -21,68 +21,58 @@ logging.basicConfig(filename='logs/logs.log',
                     format=LOG_FORMAT,
                     level=logging.DEBUG)
 
-# Load the data
-df = pd.read_csv('data/sj_imoveis_scraped2.csv')
-df = df[['price', 'area', 'bedrooms', 'bathrooms', 'garages']]
 
-
+# RF class
 class RF():
+    """
+    Class to model the Viva Real Real Estate data through the Random Forest Model
+    """
     def __init__(self, df_address):
         self.df = pd.read_csv(df_address)
-        # logging.info('Object RF created successfully')
+        logging.info('Object RF created successfully')
     
-    def transform_df(self): # Better name
+    def transform_df(self):
         self.df = self.df[['price', 'area', 'bedrooms', 'bathrooms', 'garages']]
-        self.df = self.df.loc[df['price'] != 'partir']
-        self.df = self.df.garages.replace({"--": 0})
-        self.df = self.df.bathrooms.replace({"1-2": 1.5})
-        self.df = self.df.garages.replace({"1-2": 1.5})
-        self.df = self.df.garages.replace({"2-3": 2.5})
+        self.df = self.df.loc[self.df['price'] != 'partir']
+        self.df.bathrooms = self.df.bathrooms.replace({"--": 0})
+        self.df.bathrooms = self.df.bathrooms.replace({"1-2": 1.5}) # replace for something that works anyway
+        self.df.bathrooms = self.df.bathrooms.replace({"2-3": 2.5})
+        self.df.garages = self.df.garages.replace({"--": 0})
+        self.df.garages = self.df.garages.replace({"1-2": 1.5})
+        self.df.garages = self.df.garages.replace({"2-3": 2.5})
         self.df = self.df.apply(pd.to_numeric)
-        # logging.info(f'DF transformed')
+        logging.info('Data transformed')
     
     def set_label(self):
         self.labels = np.array(self.df.price)
+        logging.info('label set')
 
     def set_feature(self):
-        self.feature = self.df[['area', 'bedrooms', 'bathrooms', 'garages']]
-        self.feature_list = list(self.features.columns)
-        self.features = np.array(self.features)
-
-    # def measure_fit(self):
-    #     self.train_features, self.test_features, self.train_labels, self.test_labels = train_test_split(self.features, self.labels, test_size = 0.25, random_state = 42)
-    #     self.rft = RandomForestRegressor(n_estimators = 1000, random_state = 42)
-    #     self.rft.fit(self.train_features, self.train_labels)
-    #     self.r2 = self.rft.score(self.train_features, self.train_labels)
-    #     logging.info(f'R2 {self.r2} scored') # melhorar
+        self.features = np.array(self.df[['area', 'bedrooms', 'bathrooms', 'garages']])
+        logging.info('features set')
 
     def fit_model(self):
         self.rf = RandomForestRegressor(n_estimators = 1000, random_state = 42)
         self.rf.fit(self.features, self.labels)
         self.r2 = self.rf.score(self.features, self.labels)
-        logging.info(f'R2 {self.r2} scored') # melhorar
+        logging.info(f'Model scored {self.r2} R2')
 
-    def prediction(self):
-        self.predictions = self.rf.predict(self.test_features) # input the parameters here
-
-    def shape_df(self):
-        self.shape_df = self.df.shape
-        # logging.info(f'DF {self.df.shape} shaped')
-
-    def corr_df(self):
-        self.corr_df = self.df.corr().price
-        # logging.info(f'asasasas')
+    def make_prediction(self, pred_feat):
+        self.prediction = self.rf.predict(np.array([pred_feat]))[0].astype(int)
+        self.prediction_txt = f'{self.prediction} reais'
+        logging.info(f'For parameters {pred_feat}, model predicted {self.prediction} reais for this home')
 
     def run(self):
+        """
+        run() method applies methods in an orderlly manner
+        """
         self.transform_df()
-        self.shape_df()
-        self.corr_df()
+        self.set_label()
+        self.set_feature()
+        self.fit_model()
+        logging.info('Method run() completed')
 
 
-
-
-
-
-
-RFtry1 = RF(df_address='data/sj_imoveis_scraped.csv')
-RFtry1.shape_df()
+# RFtry1 = RF(df_address='data/sj_imoveis_scraped.csv')
+# RFtry1.run()
+# RFtry1.make_prediction([80, 1, 1, 1])

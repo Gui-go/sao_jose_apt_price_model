@@ -23,13 +23,28 @@ logging.basicConfig(filename='logs/logs.log',
 
 class VR:
     """
-    Class to scrap Viva Real data
+    Class to scrap Viva Real real estate data
 
     Atributes:
+        primeira_pagina:
+        browser:
+        dd:
+        df:
+        html:
+        soup:
+        shape:
 
     Methods:
-
-
+        __init__():
+        scraper():
+        next_page():
+        uniques():
+        save():
+        adddate():
+        filter():
+        shape():
+        exit():
+        run():
 
     """
     def __init__(self, primeira_pagina):
