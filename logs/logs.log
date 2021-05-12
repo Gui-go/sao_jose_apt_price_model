@@ -82,3 +82,15 @@
 2021-05-09 21:28:20,148  [rf_model_class.py:57]     INFO   Model scored 0.8956715237363874 R2
 2021-05-09 21:28:20,148  [rf_model_class.py:72]     INFO   Method run() completed
 2021-05-09 21:28:20,213  [rf_model_class.py:62]     INFO   For parameters [80, 1, 1, 1], model predicted 334103 reais for this home
+2021-05-11 16:35:47,747  [<stdin>:7]     INFO   Object RF created successfully
+2021-05-11 16:35:52,776  [<stdin>:18]     INFO   Data transformed
+2021-05-11 16:35:52,776  [<stdin>:21]     INFO   label set
+2021-05-11 16:35:52,778  [<stdin>:24]     INFO   features set
+2021-05-11 16:35:55,503  [<stdin>:29]     INFO   Model scored 0.8956715237363874 R2
+2021-05-11 16:35:55,503  [<stdin>:44]     INFO   Method run() completed
+2021-05-11 16:38:34,086  [<stdin>:7]     INFO   Object RF created successfully
+2021-05-11 16:38:37,006  [<stdin>:18]     INFO   Data transformed
+2021-05-11 16:38:37,006  [<stdin>:21]     INFO   label set
+2021-05-11 16:38:37,007  [<stdin>:24]     INFO   features set
+2021-05-11 16:38:39,664  [<stdin>:29]     INFO   Model scored 0.8956715237363874 R2
+2021-05-11 16:38:39,664  [<stdin>:44]     INFO   Method run() completed

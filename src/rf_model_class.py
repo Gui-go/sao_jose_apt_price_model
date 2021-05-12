@@ -1,6 +1,8 @@
-'''
+#!/usr/bin/env python3
+
+"""
 Class for the Random Forest model on São José real estate data - Predicting house pricing
-'''
+"""
 
 # Load the packages
 import numpy as np
@@ -8,7 +10,8 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-import matplotlib.pyplot as plt
+
+import joblib
 
 import logging
 
@@ -62,6 +65,9 @@ class RF():
         self.prediction_txt = f'{self.prediction} reais'
         logging.info(f'For parameters {pred_feat}, model predicted {self.prediction} reais for this home')
 
+    def make_pickle(self):
+        joblib.dump(self.rf, 'data/rf_vr_model.pkl')
+
     def run(self):
         """
         run() method applies methods in an orderlly manner
@@ -75,4 +81,5 @@ class RF():
 
 # RFtry1 = RF(df_address='data/sj_imoveis_scraped.csv')
 # RFtry1.run()
+# RFtry1.make_pickle()
 # RFtry1.make_prediction([80, 1, 1, 1])

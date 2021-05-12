@@ -1,6 +1,8 @@
-'''
-Scrap of VR
-'''
+#!/usr/bin/env python3
+
+"""
+Scrap of VR real estate data
+"""
 
 from selenium import webdriver
 from selenium.webdriver import Firefox
@@ -56,9 +58,6 @@ class VR:
         logging.info('Class VR created successfully')
     
     def scraper(self, ngroup):
-        """
-        asdasdasdasd
-        """
         self.html = self.browser.page_source
         self.soup = BeautifulSoup(self.html, 'html.parser')
         lista = list()
@@ -79,39 +78,24 @@ class VR:
         logging.info(f'Page {ngroup} scraped')
 
     def next_page(self):
-        """
-        asdasdasdasd
-        """
         self.nextpage = self.browser.find_elements_by_class_name('js-change-page')
         self.nextpage[-1].send_keys(Keys.RETURN)
         sleep(15)
         logging.info('Next page')
 
     def uniques(self):
-        """
-        asdasdasdasd
-        """
         self.df = self.df.drop_duplicates()
         logging.info(f'{len(self.df.url.drop_duplicates())} unique links ')
 
     def save(self):
-        """
-        asdasdasdasd
-        """
         self.df.to_csv(r'data/vr_imoveis.csv')
         logging.info('CSV saved')
     
     def adddate(self):
-        """
-        asdasdasdasd
-        """
         self.df['date'] = '{:%Y-%m-%d }'.format(datetime.datetime.now())
         logging.info('Date added')
 
     def filter(self):
-        """
-        asdasdasdasd
-        """
         self.df = self.df[-self.df['price'].isin(['Consulta'])] # minimum filters during the scrap phase, aftwards I can filter and treat it better
         # self.df = self.df[-self.df.area.str.contains("-", na=False)]
         # self.df = self.df[-self.df.bedrooms.str.contains("--", na=False)]
@@ -119,23 +103,17 @@ class VR:
         logging.info('DF filtered')
 
     def shape(self):
-        """
-        asdasdasdasd
-        """
         # self.shapedf = self.df.shape
         logging.info(f'DF {self.df.shape} shaped')
 
     def exit(self):
-        """
-        asdasdasdasd
-        """
         sleep(1)
         self.browser.quit()
         logging.info('Exiting')
         
     def run(self, qpages):
         """
-        asdasdasdasd
+        run() method to apply the methods in an orderly manner.
         """
         logging.info('Running method .run()')
         for page in range(1, qpages):
